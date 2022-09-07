@@ -1,0 +1,59 @@
+Completed
+---------
+1. Basic Schema
+2. Insert one document
+3. Insert multiple document
+4. Update one document
+5. Update multiple document
+6. Delete one document
+7. Send mail
+8. Upload one file using multer
+9. Upload multiple file using multer
+10. DB connection
+11. Routes Mapping
+12. Get one document
+13. Get multiple document
+14. Basic validation
+15. Insert array of object
+16. Write file
+17. Read file
+18. cache on server
+19. Generate Token
+20. Verify Token
+21. Update array of object
+22. Delete multiple document
+23. Pagination
+24. Save Password in bcrypt from
+25. Get and Match Password 
+26. Get selected data
+27. Schema relationship 
+28. Get relational data through populate
+29. Morgon for Loggers
+
+
+
+Pending
+-------
+1. Send otp 
+2. Verify otp
+3. Proper validation
+4. Convert XLSL file to JSON
+5. Update array of array object
+6. Advance middleware
+7. Social website login and signup
+8. Insta Feed
+9. Search api
+10. Logout api
+11. ENV Files
+12. Aggregation in mongodb
+
+
+
+
+Response Code
+------------
+200 - OK
+201 - Created
+400 - Bad request
+404 - Not Found
+500 - Internal server error
