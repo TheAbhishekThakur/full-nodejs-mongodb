@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
-const DB_URL = process.env.DB_URL;
+const dbURL = "mongodb+srv://abhishekThakur:thakur@123@cluster0.easkcz2.mongodb.net/fullNodeJsMongoDB?retryWrites=true&w=majority";
+const DB_URL = process.env.DB_URL || dbURL;
 
 
 // DB connection
-const db = mongoose.connect('mongodb://127.0.0.1:27017/learnNodeMongo', {
+const db = mongoose.connect(DB_URL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,

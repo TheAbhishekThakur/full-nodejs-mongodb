@@ -57,3 +57,12 @@ Response Code
 400 - Bad request
 404 - Not Found
 500 - Internal server error
+
+
+
+MongoDB Database Details
+------------------------
+Username - abhishekThakur
+Password - thakur@123
+Connection Url - mongodb+srv://abhishekThakur:thakur@123@cluster0.easkcz2.mongodb.net/fullNodeJsMongoDB?retryWrites=true&w=majority
+Connect Nodejs to MongoAtlas - https://www.youtube.com/watch?v=084rmLU1UgA
