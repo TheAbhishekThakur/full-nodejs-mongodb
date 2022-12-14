@@ -15,7 +15,10 @@ const fileUploadRoute = require("./Routes/fileUploadRoute");
 const courseRoute = require("./Routes/CourseRoute");
 const queAndRoute = require("./Routes/QueAnsRoute");
 const readWriteFile = require("./Routes/readWriteFile");
+const eventEmitter = require("./Routes/eventEmitterRoute");
 const otherRoute = require("./Routes/OtherRoute");
+const tokenRoute = require("./Routes/tokenRoute");
+
 
 
 // Middlewares
@@ -47,6 +50,8 @@ app.use('/api/files', fileUploadRoute);
 app.use("/api/course", courseRoute);
 app.use("/api/que-ans", queAndRoute);
 app.use("/api/file", readWriteFile);
+app.use("/api/event-emitter", eventEmitter);
+app.use("/api/token", tokenRoute);
 app.use("/api/all", otherRoute)
 
 
