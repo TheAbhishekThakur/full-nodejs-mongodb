@@ -18,7 +18,7 @@ const readWriteFile = require("./Routes/readWriteFile");
 const eventEmitter = require("./Routes/eventEmitterRoute");
 const otherRoute = require("./Routes/OtherRoute");
 const tokenRoute = require("./Routes/tokenRoute");
-
+const aggregationRoute = require("./Routes/AggregationRoute");
 
 
 // Middlewares
@@ -53,6 +53,8 @@ app.use("/api/file", readWriteFile);
 app.use("/api/event-emitter", eventEmitter);
 app.use("/api/token", tokenRoute);
 app.use("/api/all", otherRoute)
+app.use("/api/aggregation", aggregationRoute)
+
 
 
 app.listen(port, () => {
