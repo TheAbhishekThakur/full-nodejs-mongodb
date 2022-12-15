@@ -30,6 +30,7 @@ Completed
 28. Get relational data through populate
 29. Morgon for Loggers
 30. Event Emmitter
+31. Aggregation in mongodb
 
 
 
@@ -46,7 +47,6 @@ Pending
 9. Search api
 10. Logout api
 11. ENV Files
-12. Aggregation in mongodb
 
 
 

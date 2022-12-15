@@ -57,6 +57,23 @@ app.use("/api/aggregation", aggregationRoute)
 
 
 
+// ================================== Get Response Time ===================================
+const responseTime = require("response-time");
+const StatsD = require("node-statsd");
+const stats = new StatsD();
+// app.use(responseTime());
+
+app.use(
+  responseTime(function (req, res, time) {
+    var stat = (req.method + req.url)
+      .toLowerCase()
+      .replace(/[:.]/g, "")
+      .replace(/\//g, "_");
+    stats.timing(stat, time);
+    // console.log("res time", time);
+  })
+);
+
 app.listen(port, () => {
     console.log(`Listening on port ` + port)
 });
