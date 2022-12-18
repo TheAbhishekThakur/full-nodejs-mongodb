@@ -7,8 +7,8 @@ Completed
 5. Update multiple document
 6. Delete one document
 7. Send mail
-8. Upload one file using multer
-9. Upload multiple file using multer
+8. Upload one file using multer in a server folder
+9. Upload multiple file using multer in a server folder
 10. DB connection
 11. Routes Mapping
 12. Get one document
@@ -31,6 +31,7 @@ Completed
 29. Morgon for Loggers
 30. Event Emmitter
 31. Aggregation in mongodb
+32. Upload single file using multer on firebase
 
 
 
@@ -47,6 +48,11 @@ Pending
 9. Search api
 10. Logout api
 11. ENV Files
+12. Upload multiple file using multer on firebase
+13. Upload single file using multer on cloudinary
+14. Upload mutiple file using multer on cloudinary
+15. Upload single file using multer on AWS s3 bucket
+16. Upload mutiple file using multer on AWS s3 bucket
 
 
 
