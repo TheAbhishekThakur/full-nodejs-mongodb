@@ -7,9 +7,41 @@ admin.initializeApp({
 });
 
 const firebaseBucket = admin.storage().bucket();
-// console.log("firebaseBucket", firebaseBucket);
 
-const uploadFileOnFirebase = (req, res, next) => {
+const uploadSingleFileOnFirebase = (req, res, next) => {
+  if (!req.file) {
+    return next();
+  }
+
+  const image = req.file;
+  const fileName = Date.now() + "." + image.originalname.split(".").pop();
+  const file = firebaseBucket.file(fileName);
+  const stream = file.createWriteStream({
+    metaData: {
+      contentType: image.mimeType,
+    },
+  });
+
+  stream.on("error", (e) => {
+    console.log(e);
+  });
+
+  stream.on("finish", async () => {
+    try {
+      await file.makePublic();
+      req.file.firebaseUrl = `${firebaseBucket.storage.apiEndpoint}/${firebaseBucket.name}/${fileName}`;
+      next();
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+  stream.end(image.buffer);
+};
+
+
+const uploadMultipleFileOnFirebase = (req, res, next) => {
+  console.log("firebaseBucket.storage", firebaseBucket)
   if (!req.file) {
     return next();
   }
@@ -51,5 +83,6 @@ const FirebaseMulter = multer({
 
 module.exports = {
   FirebaseMulter,
-  uploadFileOnFirebase,
+  uploadSingleFileOnFirebase,
+  uploadMultipleFileOnFirebase,
 };

@@ -3,7 +3,8 @@ const router = express.Router();
 const { upload } = require("../Utils/multer");
 const {
   FirebaseMulter,
-  uploadFileOnFirebase,
+  uploadSingleFileOnFirebase,
+  uploadMultipleFileOnFirebase,
 } = require("../Utils/multerFirebase");
 const { sendResponse, sendErrorResponse } = require("../Utils/reqResFormat");
 
@@ -51,7 +52,7 @@ router.post(
 router.post(
   "/single-file-upload-firebse",
   FirebaseMulter.single("image"),
-  uploadFileOnFirebase,
+  uploadSingleFileOnFirebase,
   function (req, res) {
     try {
       let response = req.file.firebaseUrl;
@@ -69,6 +70,25 @@ router.post(
 );
 
 // Upload multiple file using multer on firebase
+router.post(
+  "/multiple-file-upload-firebse",
+  FirebaseMulter.array("images",2),
+  uploadMultipleFileOnFirebase,
+  function (req, res) {
+    try {
+      let response = null;
+      console.log("response", response);
+      res
+        .status(200)
+        .send(sendResponse(response, 0, "file_uploaded_successfully"));
+    } catch (error) {
+      console.log("error", error);
+      res
+        .status(500)
+        .send(sendErrorResponse(error, 2, "internal_server_error"));
+    }
+  }
+);
 
 // Upload single file using multer on cloudinary
 
