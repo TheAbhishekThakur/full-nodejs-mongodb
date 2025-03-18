@@ -1,6 +1,6 @@
 // Aggregation in mongodb
-const User = require("../Models/UserModel");
-const { sendResponse, sendErrorResponse } = require("../Utils/reqResFormat");
+const User = require("../models/user");
+const { sendResponse, sendErrorResponse } = require("../utils/reqResFormat");
 
 // $match -> It return an array
 const findOneDoc = async (req, res) => {
@@ -37,6 +37,5 @@ module.exports = {
   findOneDoc,
   findOneDoc2,
 };
-
 
 // Reference :- https://www.mongodb.com/docs/drivers/node/current/fundamentals/aggregation/

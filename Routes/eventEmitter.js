@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const EventEmitterController = require("../Controllers/EventEmitterController");
+const EventEmitterController = require("../controllers/eventEmitter");
 
 router.get("/first", EventEmitterController.firstApi);
 router.get("/second", EventEmitterController.secondApi);

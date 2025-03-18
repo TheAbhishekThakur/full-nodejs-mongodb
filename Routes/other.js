@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const { sendResponse, sendErrorResponse } = require("../Utils/reqResFormat");
-const ProperValidateController = require("../Controllers/ProperValidateController");
+const { sendResponse, sendErrorResponse } = require("../utils/reqResFormat");
+const ProperValidateController = require("../controllers/properValidate");
 
 // Cache
 const NodeCache = require("node-cache");

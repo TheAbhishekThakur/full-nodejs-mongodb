@@ -6,7 +6,7 @@ const {
   uploadSingleFileOnFirebase,
   uploadMultipleFileOnFirebase,
 } = require("../Utils/multerFirebase");
-const { sendResponse, sendErrorResponse } = require("../Utils/reqResFormat");
+const { sendResponse, sendErrorResponse } = require("../utils/reqResFormat");
 
 router.use(express.static(__dirname + "./uploads/"));
 
@@ -72,7 +72,7 @@ router.post(
 // Upload multiple file using multer on firebase
 router.post(
   "/multiple-file-upload-firebse",
-  FirebaseMulter.array("images",2),
+  FirebaseMulter.array("images", 2),
   uploadMultipleFileOnFirebase,
   function (req, res) {
     try {

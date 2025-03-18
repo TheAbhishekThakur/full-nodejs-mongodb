@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { sendResponse, sendErrorResponse } = require("../Utils/reqResFormat");
+const { sendResponse, sendErrorResponse } = require("../utils/reqResFormat");
 const {
   verifyToken1,
   verifyToken2,
   auth,
   getJwtToken,
-} = require("../Middleware/tokenVerify");
+} = require("../middlewares/tokenVerify");
 // Token
 var jwt = require("jsonwebtoken");
 
