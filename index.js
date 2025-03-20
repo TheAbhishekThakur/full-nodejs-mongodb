@@ -18,6 +18,7 @@ const eventEmitter = require("./routes/eventEmitter");
 const otherRoute = require("./routes/other");
 const tokenRoute = require("./routes/token");
 const aggregationRoute = require("./routes/aggregation");
+const workerThreadRoute = require("./routes/workerThreads");
 
 // Middlewares
 app.use(cors());
@@ -50,6 +51,7 @@ app.use("/api/event-emitter", eventEmitter);
 app.use("/api/token", tokenRoute);
 app.use("/api/all", otherRoute);
 app.use("/api/aggregation", aggregationRoute);
+app.use("/api/worker-thread", workerThreadRoute);
 
 // ================================== Get Response Time ===================================
 const responseTime = require("response-time");
