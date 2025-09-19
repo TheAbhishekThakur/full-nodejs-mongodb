@@ -22,11 +22,11 @@ const workerThreadRoute = require("./routes/workerThreads");
 
 // Middlewares
 app.use(cors());
-app.use(morgan("combined"));
-app.use(express.static("public"));
-app.use("/uploads", express.static("uploads"));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(morgan("combined")); // for logging
+app.use(express.static("public")); // for static files
+app.use("/uploads", express.static("uploads")); // for file upload
+app.use(bodyParser.urlencoded({ extended: false })); // for form data
+app.use(express.json()); // for json data
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
