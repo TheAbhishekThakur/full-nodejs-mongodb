@@ -583,3 +583,6 @@ db.students.find({ Hobbies: 'walk' })
 db.students.find({ 'identity.hasAdhaarCard': true })
 ```
 ![alt text](image-48.png)
+
+
+# 25. Logical Operators in MongoDB ($not, $and, $or & $nor)
