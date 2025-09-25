@@ -586,3 +586,96 @@ db.students.find({ 'identity.hasAdhaarCard': true })
 
 
 # 25. Logical Operators in MongoDB ($not, $and, $or & $nor)
+
+1. `$or`: Joins query clauses with a logical OR. Returns documents that match at least one condition.
+
+```
+db.students.find({ $or: [{ age: {$lte: 10} }, { age: { $gte: 12}}] })
+```
+![alt text](image-49.png)
+
+2. `$nor`: Joins clauses with logical NOR. Returns documents that fail all conditions (NOT OR).
+
+```
+db.students.find({ $nor: [{ age: {$lte: 10} }, { age: { $gte: 12}}] })
+```
+![alt text](image-50.png)
+
+3. `$and`: Joins query clauses with a logical AND. Returns documents that match all conditions.
+
+```
+db.students.find({ $and: [{ age: {$lt: 11} }, { Hobbies: "Walk" }] })
+```
+![alt text](image-51.png)
+
+4. `$not`: Inverts the effect of a query expression. Matches documents that do not satisfy the condition.
+
+```
+db.students.find({ $not: { name: "Abhishek" }})
+```
+
+Return all the documents.
+
+# 26. Element Query Operator ($exists and $type)
+
+Element operators return data based on field existence or data types.
+
+1. `$exists`: Check field exist or not.
+```
+db.students.find({ hasMacBook: { $exists: true } })
+```
+![alt text](image-52.png)
+
+2. `$type`: Check if a field have different datatypes.
+```
+db.students.find({ hasMacBook: { $exists: true, $type: "bool" } })
+```
+![alt text](image-53.png)
+
+Reference: `https://www.mongodb.com/docs/manual/reference/operator/query/type/`
+
+# 27. Evaluation Operators
+
+Evaluation operators query data on higher level logic, like regex and text queries.
+
+1. `$expr`
+
+```
+db.collection.find({
+  $expr: {
+    $gt: ["$field1", "$field2"]
+  }
+})
+```
+This will find all the documents in the `collection` where the value of `field1` is greater than the value of `field2`.
+
+Exmaple:
+```
+db.collection.find({
+  $expr: {
+    $gt: ["$price", { $avg: "$price" }]
+  }
+})
+```
+This will find all the documents in the `collection` where the value of `price` field is greater than the average value of the `price` field for all the documents in the collection.
+
+2. `$regex`: Provides regular expression capabilities for pattern matching strings in queries.
+
+```
+db.students.find({ name: { $regex: /^A/ } })
+```
+![alt text](image-54.png)
+
+
+3. `$text`: Perform text search.
+![alt text](image-55.png)
+
+![alt text](image-56.png)
+
+![alt text](image-57.png)
+
+4. `$mod`
+Select documents where the value of a field divided by a divisor has the specified remainder. That is, $mod performs a modulo operation to select documents. The first argument is the dividend, and the second argument is the remainder.
+
+![alt text](image-58.png)
+
