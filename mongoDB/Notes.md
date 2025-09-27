@@ -4,7 +4,7 @@
 show dbs
 ```
 
-![alt text](image.png)
+![alt text](./images/image.png)
 
 # 2. Create new database
 
@@ -18,7 +18,7 @@ use db_name
 db.students.insertOne({ name: "Ram", age: 12 })
 ```
 
-![alt text](image-1.png)
+![alt text](./images/image-1.png)
 
 # 4. To get all the documents from a collection inside database
 
@@ -26,7 +26,7 @@ db.students.insertOne({ name: "Ram", age: 12 })
 db.students.find()
 ```
 
-![alt text](image-2.png)
+![alt text](./images/image-2.png)
 
 # 5. Update a document
 
@@ -34,9 +34,9 @@ db.students.find()
 db.students.updateOne({ name: "Ram" }, { $set: { idCards: { hasPanCard: false, hasAdhaarCard: true } }})
 ```
 
-![alt text](image-3.png)
+![alt text](./images/image-3.png)
 
-![alt text](image-4.png)
+![alt text](./images/image-4.png)
 
 `Note 1: MongoDB supports a maximum of 100 levels of nesting for BSON documents.`
 
@@ -47,28 +47,28 @@ db.students.updateOne({ name: "Ram" }, { $set: { idCards: { hasPanCard: false, h
 db.students.updateMany({}, {$set: {hobbies: ['Anime', 'Cooking']}})
 ```
 
-![alt text](image-5.png)
+![alt text](./images/image-5.png)
 
-![alt text](image-6.png)
+![alt text](./images/image-6.png)
 
-![alt text](image-7.png)
+![alt text](./images/image-7.png)
 
 # 7. Search document from collection
 
 ```
 db.students.find({ 'idCards.hasPanCard': true })
 ```
-![alt text](image-8.png)
+![alt text](./images/image-8.png)
 
 # 8. CRUD Operations
 
-![alt text](image-9.png)
+![alt text](./images/image-9.png)
 
-![alt text](image-10.png)
+![alt text](./images/image-10.png)
 
 ![alt text](<Screenshot 2025-09-20 at 1.01.37 PM.png>)
 
-![alt text](image-11.png)
+![alt text](./images/image-11.png)
 
 # 9. To check all the collections
 
@@ -78,9 +78,9 @@ show collections
 
 # 10. Find vs FindOne
 
-![alt text](image-12.png)
+![alt text](./images/image-12.png)
 
-![alt text](image-13.png)
+![alt text](./images/image-13.png)
 
 ## find()
 - Returns all documents that match the query criteria.
@@ -90,7 +90,7 @@ show collections
 - Returns the first matching document only (not an array).
 - If no document matches, it returns null.
 
-![alt text](image-14.png)
+![alt text](./images/image-14.png)
 
 ## pre-defined keywords
 
@@ -100,7 +100,7 @@ lte -> less than equal
 gte -> greater than equal
 ```
 
-![alt text](image-15.png)
+![alt text](./images/image-15.png)
 
 # 11. What is a Cursor in MongoDB?
 
@@ -160,18 +160,18 @@ A cursor is like a smart pointer that lets you process query results efficiently
 ```
 db.students.insert({name: "Ram", age: 12})
 ```
-![alt text](image-16.png)
+![alt text](./images/image-16.png)
 
 ```
 db.students.insertOne({name: "Ankit", age: 13})
 ```
-![alt text](image-17.png)
+![alt text](./images/image-17.png)
 
 ## Insert many Document
 ```
 db.students.insertMany([{name: "Vijay", age: 23}, {name: "Nitin", age: 34}])
 ```
-![alt text](image-18.png)
+![alt text](./images/image-18.png)
 
 
 # 13. Update Document
@@ -180,18 +180,18 @@ db.students.insertMany([{name: "Vijay", age: 23}, {name: "Nitin", age: 34}])
 ```
 db.students.updateOne({name: "Vijay"}, {$set: {age: 15}})
 ```
-![alt text](image-19.png)
+![alt text](./images/image-19.png)
 
 ## Update many Document
 ```
 db.students.updateMany({age: 12}, {$set: {age: 13}})
 ```
-![alt text](image-20.png)
+![alt text](./images/image-20.png)
 
 ## Add new field while updating
-![alt text](image-21.png)
-![alt text](image-22.png)
-![alt text](image-23.png)
+![alt text](./images/image-21.png)
+![alt text](./images/image-22.png)
+![alt text](./images/image-23.png)
 
 
 # 14. Delete Documents
@@ -200,33 +200,33 @@ db.students.updateMany({age: 12}, {$set: {age: 13}})
 ```
 db.students.deleteOne({ name: "Nitin" })
 ```
-![alt text](image-25.png)
+![alt text](./images/image-25.png)
 
 ## Delete many Documents
 ```
 db.students.deleteMany({ age: 13 })
 ```
-![alt text](image-24.png)
+![alt text](./images/image-24.png)
 
-![alt text](image-26.png)
+![alt text](./images/image-26.png)
 
 # 15. Select Column Query (Projection In MongoDB)
 ```
 db.students.find()
 ```
 It will return all the documents with all columns (fields).
-![alt text](image-27.png)
+![alt text](./images/image-27.png)
 
 With Projection you can get specific fields.
 ```
 db.students.find({}, {name: 1})
 ```
-![alt text](image-28.png)
+![alt text](./images/image-28.png)
 
 ```
 db.students.find({}, {name: 1, _id: 0})
 ```
-![alt text](image-29.png)
+![alt text](./images/image-29.png)
 
 # 16. Is MongoDB really Schemaless?
 
@@ -320,7 +320,7 @@ module.exports = mongoose.model("Example", exampleSchema);
 ```
 db.dropDatabase()
 ```
-![alt text](image-30.png)
+![alt text](./images/image-30.png)
 
 ## Delete a collection
 
@@ -332,13 +332,13 @@ db.students.drop()
 ```
 db.books.insertMany([{ name: "A", price: 1 }, { name: "B", price: 2 }])
 ```
-![alt text](image-31.png)
+![alt text](./images/image-31.png)
 
-![alt text](image-32.png)
+![alt text](./images/image-32.png)
 
-![alt text](image-33.png)
+![alt text](./images/image-33.png)
 
-![alt text](image-34.png)
+![alt text](./images/image-34.png)
 
 # 20. Schema Validation in MongoDB
 
@@ -347,7 +347,7 @@ db.books.insertMany([{ name: "A", price: 1 }, { name: "B", price: 2 }])
 ```
 db.createCollection("nonfiction")
 ```
-![alt text](image-35.png)
+![alt text](./images/image-35.png)
 
 ## Create a Collection with schema validation
 ```
@@ -370,7 +370,7 @@ db.createCollection("nonfiction", {
     validationAction: "warn" // by default -> validationAction: "error"
 })
 ```
-![alt text](image-36.png)
+![alt text](./images/image-36.png)
 
 ## Modify your schema validation
 ```
@@ -413,7 +413,7 @@ db.runCommand({
 })
 ```
 
-![alt text](image-37.png)
+![alt text](./images/image-37.png)
 
 # 21. Write concern in MongoDB
 
@@ -453,7 +453,7 @@ db.myCollection.insertOne(
 
 This example requests that the insertOne operation be acknowledged by a majority of the replica set members, committed to the on-disk journal, and that the acknowledgment be received within 5 seconds.
 
-![alt text](image-38.png)
+![alt text](./images/image-38.png)
 
 # 22. Atomicity in MongoDB
 
@@ -520,9 +520,9 @@ try {
 
 # 23. MongoImport in MongoDB ( Import json in MongoDB )
 
-![alt text](image-39.png)
+![alt text](./images/image-39.png)
 
-![alt text](image-40.png)
+![alt text](./images/image-40.png)
 
 # 24. Comparison operators in MongoDB in Hindi ( $eq, $ne, $lt, $gt, $lte, $gte, $in & $nin )
 
@@ -530,19 +530,19 @@ try {
 ```
 db.students.find({age: {$eq:5}})
 ```
-![alt text](image-41.png)
+![alt text](./images/image-41.png)
 
 2. `$ne` → Not Equal To
 ```
 db.students.find({age: {$ne:5}})
 ```
-![alt text](image-42.png)
+![alt text](./images/image-42.png)
 
 3. `$lt` → Less Than
 ```
 db.students.find({age: {$lt:5}})
 ```
-![alt text](image-44.png)
+![alt text](./images/image-44.png)
 
 4. `$gt` → Greater Than
 ```
@@ -558,31 +558,31 @@ db.students.find({age: {$lte:5}})
 ```
 db.students.find({age: {$gte:5}})
 ```
-![alt text](image-43.png)
+![alt text](./images/image-43.png)
 
 7. `$in` → In Array
 ```
 db.students.find({age: {$in:[5,11,12]}})
 ```
-![alt text](image-45.png)
+![alt text](./images/image-45.png)
 
 8. `$nin` → Not In Array
 ```
 db.students.find({age: {$nin:[5,12]}})
 ```
-![alt text](image-46.png)
+![alt text](./images/image-46.png)
 
 ## Check value inside the array
 ```
 db.students.find({ Hobbies: 'walk' })
 ```
-![alt text](image-47.png)
+![alt text](./images/image-47.png)
 
 ## Check value inside the object
 ```
 db.students.find({ 'identity.hasAdhaarCard': true })
 ```
-![alt text](image-48.png)
+![alt text](./images/image-48.png)
 
 
 # 25. Logical Operators in MongoDB ($not, $and, $or & $nor)
@@ -592,21 +592,21 @@ db.students.find({ 'identity.hasAdhaarCard': true })
 ```
 db.students.find({ $or: [{ age: {$lte: 10} }, { age: { $gte: 12}}] })
 ```
-![alt text](image-49.png)
+![alt text](./images/image-49.png)
 
 2. `$nor`: Joins clauses with logical NOR. Returns documents that fail all conditions (NOT OR).
 
 ```
 db.students.find({ $nor: [{ age: {$lte: 10} }, { age: { $gte: 12}}] })
 ```
-![alt text](image-50.png)
+![alt text](./images/image-50.png)
 
 3. `$and`: Joins query clauses with a logical AND. Returns documents that match all conditions.
 
 ```
 db.students.find({ $and: [{ age: {$lt: 11} }, { Hobbies: "Walk" }] })
 ```
-![alt text](image-51.png)
+![alt text](./images/image-51.png)
 
 4. `$not`: Inverts the effect of a query expression. Matches documents that do not satisfy the condition.
 
@@ -624,13 +624,13 @@ Element operators return data based on field existence or data types.
 ```
 db.students.find({ hasMacBook: { $exists: true } })
 ```
-![alt text](image-52.png)
+![alt text](./images/image-52.png)
 
 2. `$type`: Check if a field have different datatypes.
 ```
 db.students.find({ hasMacBook: { $exists: true, $type: "bool" } })
 ```
-![alt text](image-53.png)
+![alt text](./images/image-53.png)
 
 Reference: `https://www.mongodb.com/docs/manual/reference/operator/query/type/`
 
@@ -664,18 +664,102 @@ This will find all the documents in the `collection` where the value of `price` 
 ```
 db.students.find({ name: { $regex: /^A/ } })
 ```
-![alt text](image-54.png)
+![alt text](./images/image-54.png)
 
 
 3. `$text`: Perform text search.
-![alt text](image-55.png)
+![alt text](./images/image-55.png)
 
-![alt text](image-56.png)
+![alt text](./images/image-56.png)
 
-![alt text](image-57.png)
+![alt text](./images/image-57.png)
 
 4. `$mod`
 Select documents where the value of a field divided by a divisor has the specified remainder. That is, $mod performs a modulo operation to select documents. The first argument is the dividend, and the second argument is the remainder.
 
-![alt text](image-58.png)
+![alt text](./images/image-58.png)
 
+# 28. Querying Arrays
+
+![alt text](./images/image-59.png)
+
+## Get all the students whose hobby is cricket.
+```
+db.students.find({ Hobbies: "Cricket" })
+```
+![alt text](./images/image-60.png)
+
+## Students who have experience in amazon?
+
+```
+db.students.find({ "experience.company": "Amazon" })
+```
+![alt text](./images/image-61.png)
+
+## How many students have worked in spotify.
+```
+db.students.find({ "experience.company": "Spotify" }).size()
+```
+
+## How many students who have worked in 3 companies.
+```
+db.students.find({ experience: { $size: 3 } })
+```
+![alt text](./images/image-62.png)
+
+OR
+
+![alt text](./images/image-63.png)
+
+## How many students whose hobbies are walking and reading.
+
+```
+db.students.find({ Hobbies: { $all: ["Walking", "Reading"] } })
+```
+![alt text](./images/image-64.png)
+
+## How many students whose hobbies are walking or reading.
+
+```
+db.students.find({ Hobbies: { $in: ["Walking", "Reading"] } })
+```
+
+## Documents that have at least a product with name apple and quantity greater than 15.
+```
+db.products.find({ $elemMatch: { quantity: { $gt: 11 }, name: "apple" } })
+```
+![alt text](./images/image-65.png)
+
+# 29. Effortlessly Sort Your MongoDB Documents
+
+![alt text](./images/image-66.png)
+
+## Asc by age
+```
+db.teachers.find().sort({ age: 1 })
+```
+![alt text](./images/image-67.png)
+
+## Desc by age
+```
+db.teachers.find().sort({ age: -1 })
+```
+![alt text](./images/image-68.png)
+
+## Sort by age and name both
+```
+db.teachers.find().sort({ age: 1, name: 1 })
+```
+![alt text](./images/image-69.png)
+
+## skip and limit
+```
+db.teachers.find().sort({ age: 1 }).skip(10)
+```
+
+```
+db.teachers.find().sort({ age: 1 }).limit(5)
+```
+![alt text](./images/image-70.png)
+
+# 30. Advanced Update ($inc, $min, $max, $mul, $unset, $rename & Upsert)
