@@ -763,3 +763,109 @@ db.teachers.find().sort({ age: 1 }).limit(5)
 ![alt text](./images/image-70.png)
 
 # 30. Advanced Update ($inc, $min, $max, $mul, $unset, $rename & Upsert)
+
+## 1. $inc - Increase age of all students by 2.
+```
+db.students.updateMany({}, { $inc: { age: 2 } })
+```
+![alt text](./images/image-71.png)
+
+## 2. $min and $max - Increase age of sita to 50 only if her age is lesser than it.
+```
+db.students.updateOne({ name: "Sita" }, { $max: { age: 50 } })
+```
+![alt text](./images/image-72.png)
+
+```
+db.students.updateOne({ name: "Sita" }, { $min: { age: 23 } })
+```
+![alt text](./images/image-73.png)
+
+## 3. $mul - Multiply Sita's age by 2.
+```
+db.students.updateOne({ name: "Sita" }, { $mul: { age: 2 } })
+```
+![alt text](./images/image-74.png)
+
+## 4. $unset - Remove the age field of sita.
+```
+db.students.updateOne({ name: "Sita" }, { $unset: { age: 287236478 } })
+```
+![alt text](./images/image-75.png)
+
+## 5. $rename - Rename the age field to studentAge.
+```
+db.students.updateMany({}, { $rename: { age: "studentAge" } })
+```
+![alt text](./images/image-76.png)
+
+## 6. $upsert - If Golu doesn't exist then create a new document, if exist the update existing document.
+```
+db.students.updateOne({ name: "Golu" }, { $set: { age: 100 } }, { $upsert: true })
+```
+![alt text](./images/image-77.png)
+
+# 31. Update Nested Arrays and Use $pop, $pull, $push and $addToSet Operators
+
+## For all experiences lesser than and equal to 1 year for all students add a new field `neglect:true`
+
+Updated 1st matched element:
+```
+db.students.updateMany({ experience: { $elemMatch: { duration: { $lte: 1 } } } }, {
+  $set: { "experience.$.neglect": true }
+})
+```
+![alt text](./images/image-78.png)
+
+Updated all elements:
+```
+db.students.updateMany({ experience: { $elemMatch: { duration: { $lte: 1 } } } }, {
+  $set: { "experience.$[].neglect": 1 }
+})
+```
+![alt text](./images/image-79.png)
+
+Updated all matched elements:
+```
+db.students.updateMany({ experience: { $elemMatch: { duration: { $lte: 1 } } } }, 
+{
+  $set: { "experience.$[ele].neglect": 1 }
+},
+{
+  arrayFilters: [{ "ele.duration": { $lte: 1 } }]
+})
+```
+![alt text](./images/image-80.png)
+
+## $push - Add a new company for Ram.
+
+![alt text](./images/image-81.png)
+
+```
+db.students.updateOne({ name: "Ram" }, { $push: { experience: { company: "Meta", duration: 2 } }})
+```
+![alt text](./images/image-82.png)
+
+## $addToSet - Add a new company for Ram, if it's already added then it will not add.
+```
+db.students.updateOne({ name: "Ram" }, { $addToSet: { experience: { company: "Meta", duration: 2 } }})
+```
+![alt text](./images/image-83.png)
+
+## $pull - Remove a specific company item.
+```
+db.students.updateOne({ name: "Ram" }, { $pull: { experience: { company: "Meta", duration: 2 } }})
+```
+![alt text](./images/image-84.png)
+
+## $pop - Remove last element of company item.
+```
+db.students.updateOne({ name: "Ram" }, { $pop: { experience: 1 }})
+```
+![alt text](./images/image-85.png)
+
+## $pop - Remove fisrt element of company item.
+```
+db.students.updateOne({ name: "Ram" }, { $pop: { experience: -1 }})
+```
+![alt text](./images/image-86.png)

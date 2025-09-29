@@ -1,22 +1,4 @@
-const { createClient } = require("redis");
-
-const client = createClient();
-
-client.on("error", (err) => {
-  console.error("Redis Client Error", err);
-});
-client.on("connect", () => {
-  console.log("Redis client connected");
-});
-client.on("ready", () => {
-  console.log("Redis client is ready");
-});
-client.on("end", () => {
-  console.log("Redis client disconnected");
-});
-client.on("reconnecting", () => {
-  console.log("Redis client reconnecting");
-});
+const { redisClient } = require("../utils/redis");
 
 const setData = async (req, res) => {
   const { key, value } = req.body;
@@ -24,7 +6,7 @@ const setData = async (req, res) => {
     return res.status(400).json({ error: "Key and value are required" });
   }
   try {
-    await client.set(key, value);
+    await redisClient.set(key, value);
     console.log(`Data set: ${key} = ${value}`);
     return true;
   } catch (err) {
@@ -35,7 +17,7 @@ const setData = async (req, res) => {
 const getData = async (req, res) => {
   const { key } = req.params;
   try {
-    const value = await client.get(key);
+    const value = await redisClient.get(key);
     console.log(`Data retrieved: ${key} = ${value}`);
     return value;
   } catch (err) {
@@ -46,7 +28,7 @@ const getData = async (req, res) => {
 const deleteData = async (req, res) => {
   try {
     const { key } = req.params;
-    await client.del(key);
+    await redisClient.del(key);
     console.log(`Data deleted: ${key}`);
     return true;
   } catch (err) {
@@ -56,7 +38,7 @@ const deleteData = async (req, res) => {
 
 const flushAll = async () => {
   try {
-    await client.flushAll();
+    await redisClient.flushAll();
     console.log("All data flushed");
     return true;
   } catch (err) {
@@ -66,7 +48,7 @@ const flushAll = async () => {
 
 const getKeys = async () => {
   try {
-    const keys = await client.keys("*");
+    const keys = await redisClient.keys("*");
     console.log("Keys retrieved:", keys);
     return keys;
   } catch (err) {
@@ -76,7 +58,7 @@ const getKeys = async () => {
 
 const getKeyInfo = async (key) => {
   try {
-    const info = await client.dump(key);
+    const info = await redisClient.dump(key);
     console.log(`Key info retrieved: ${key} = ${info}`);
     return info;
   } catch (err) {
@@ -86,7 +68,7 @@ const getKeyInfo = async (key) => {
 
 const getType = async (key) => {
   try {
-    const type = await client.type(key);
+    const type = await redisClient.type(key);
     console.log(`Key type retrieved: ${key} = ${type}`);
     return type;
   } catch (err) {
@@ -96,7 +78,7 @@ const getType = async (key) => {
 
 const getTTL = async (key) => {
   try {
-    const ttl = await client.ttl(key);
+    const ttl = await redisClient.ttl(key);
     console.log(`Key TTL retrieved: ${key} = ${ttl}`);
     return ttl;
   } catch (err) {
@@ -106,7 +88,7 @@ const getTTL = async (key) => {
 
 const getKeysCount = async () => {
   try {
-    const count = await client.dbSize();
+    const count = await redisClient.dbSize();
     console.log("Keys count retrieved:", count);
     return count;
   } catch (err) {
@@ -115,7 +97,7 @@ const getKeysCount = async () => {
 };
 const getInfo = async () => {
   try {
-    const info = await client.info();
+    const info = await redisClient.info();
     console.log("Redis server info retrieved:", info);
     return info;
   } catch (err) {
@@ -124,7 +106,7 @@ const getInfo = async () => {
 };
 const getConfig = async () => {
   try {
-    const config = await client.config("GET", "*");
+    const config = await redisClient.config("GET", "*");
     console.log("Redis server config retrieved:", config);
     return config;
   } catch (err) {
