@@ -869,3 +869,296 @@ db.students.updateOne({ name: "Ram" }, { $pop: { experience: 1 }})
 db.students.updateOne({ name: "Ram" }, { $pop: { experience: -1 }})
 ```
 ![alt text](./images/image-86.png)
+
+# 32. Master MongoDB Indexing : Boost Your Database Performance Instantly
+
+Suppose we have a collection:
+```
+db.students.insertMany([
+  { name: "Amit", age: 22 },
+  { name: "Srishti", age: 25 },
+  { name: "Raj", age: 22 },
+  { name: "Neha", age: 30 }
+])
+```
+## `COLLSCAN`
+- COLLSCAN = Collection Scan.
+- It means MongoDB is scanning every document in a collection to find the documents that match your query.
+- This happens when:
+  - No index exists on the field you are querying.
+  - Or, the query cannot use an existing index.
+
+```
+db.students.find({ age: 22 }).explain("executionStats")
+```
+
+Output shows:
+```
+"stage": "COLLSCAN",
+"nReturned": 2,
+"totalDocsExamined": 4
+```
+
+## `IXSCAN`
+- IXSCAN = Index Scan
+- It means MongoDB is using an index instead of scanning the whole collection.
+- Much faster than COLLSCAN because MongoDB only looks at indexed values.
+
+```
+db.students.createIndex({ age: 1 });
+db.students.find({ age: 22 }).explain("executionStats");
+```
+
+Output shows:
+```
+"stage": "IXSCAN",
+"nReturned": 2,
+"totalDocsExamined": 2
+```
+
+### Benefits of IXSCAN
+- Faster queries (no full collection scan).
+- Reduces CPU & memory usage.
+- Makes sorting efficient (.sort() can use indexes).
+- Enables covered queries (query satisfied completely from index without reading docs).
+
+### How IXSCAN Works Internally in MongoDB
+
+1. Index Structure (B-tree)
+- MongoDB indexes are stored as a B-tree (balanced tree).
+- Each node in the tree stores key values (like age) and pointers to documents (their _id in the collection).
+- This allows logarithmic (O(log n)) search time instead of scanning all documents.
+
+Example (index on { age: 1 }):
+
+```
+Index:
+  20 -> doc#1
+  22 -> doc#2, doc#3
+  25 -> doc#4
+  30 -> doc#5
+```
+
+2. Query Execution with IXSCAN
+
+Let’s say query:
+
+```
+db.students.find({ age: 22 })
+```
+`Steps`:
+
+- Step 1 - Query planner checks available indexes.
+- Step 2 - If { age: 1 } exists, it chooses IXSCAN.
+- Step 3 - Index B-tree is traversed → finds key 22.
+- Step 4 - IXSCAN retrieves the pointers (_id values) of docs matching 22.
+- Step 5 - Then, usually a FETCH stage occurs → fetches full documents from collection storage.
+
+IXSCAN uses the B-tree index to jump directly to matching keys instead of scanning the whole collection.
+
+![alt text](./images/image-87.png)
+![alt text](./images/image-88.png)
+![alt text](./images/image-89.png)
+![alt text](./images/image-90.png)
+
+### 1. Single field indexes - To create index of a field
+```
+db.teachers.createIndex({ age: 1 }) -> ascending
+db.teachers.createIndex({ age: -1 }) -> descending
+
+```
+![alt text](./images/image-89.png)
+
+`Note`: Create indexing uniquely.
+
+![alt text](./images/image-91.png)
+
+### To check all indexes of collection
+```
+db.teachers.getIndexes()
+```
+
+![alt text](./images/image-91.png)
+
+### To drop the index
+```
+db.teachers.dropIndexe("age_1")
+```
+
+OR
+
+```
+db.teachers.dropIndexe({ "age": 1 })
+```
+
+![alt text](./images/image-92.png)
+
+### When not to use indexing in mongodb?
+- When the collection is small.
+- When the collection is frequently updated.
+- When the queries are complex (multiple fields).
+- When the collection is large (make less indices).
+
+### 2. Compound indexes
+```
+db.teachers.createIndex({ "age": 1, "gender": 1 })
+```
+`Result of key`: age_1_gender_1
+
+![alt text](./images/image-93.png)
+
+Case 1:
+![alt text](./images/image-94.png)
+
+Indexing will work for age and gender both field.
+
+Case 2:
+![alt text](./images/image-95.png)
+
+Indexing will work for age field only.
+
+
+Case 3:
+![alt text](./images/image-96.png)
+
+Indexing will not work for gender field.
+
+
+Indexing also help in sorting.
+
+#### Partial filters
+- A Partial Index in MongoDB is an index that only includes the subset of documents in a collection that match a given filter expression.
+
+- It’s basically: “build an index, but only for some documents, not all.”
+
+```
+db.users.createIndex(
+  { email: 1 },   // indexed field
+  { partialFilterExpression: { status: "active" } }
+)
+```
+
+👉 This creates an index on email but only for documents where status: "active".
+
+##### Create an index on the `age` field for documents where `age` is greater than 22.
+```
+db.teachers.createIndex({ age: 1 }, { partialFilterExpression: { age: {$gt: 22}}})
+```
+
+![alt text](./images/image-98.png)
+
+##### Create an index on the `name` field for documents where `gender` value exist.
+```
+db.teachers.createIndex({ name: 1 }, { partialFilterExpression: { gender: {$exist: true}}})
+```
+
+![alt text](./images/image-99.png)
+
+##### TTL (Time-To-Live)
+TTL (Time-To-Live) indexes are special indexes that automatically remove (expire) documents from a collection after a certain amount of time.
+
+This works on date fields and on single field index
+
+
+![alt text](./images/image-100.png)
+
+
+## What is a Covered Query?
+A covered query is query which:
+- All the fields in the query are part of an index.
+- All the fields returned in the query are in the same index.
+
+### Suppose we are indexing on `name` field and fetching the data of teachers.
+![alt text](./images/image-101.png)
+
+It will not to fetch the data from database it will return the data from B-Tree.
+
+Example
+```
+db.students.insertMany([
+  { name: "Amit", age: 22, city: "Delhi" },
+  { name: "Neha", age: 25, city: "Mumbai" },
+  { name: "Raj", age: 22, city: "Bangalore" }
+])
+```
+
+Create index:
+```
+db.students.createIndex({ age: 1, name: 1 });
+```
+
+Covered query:
+```
+db.students.find(
+  { age: 22 },          // query uses "age"
+  { name: 1, _id: 0 }   // projection uses "name"
+)
+```
+
+✅ This is a covered query because:
+
+- Query uses age (part of index).
+- Projection uses name (also part of index).
+- MongoDB can answer using only the index → no FETCH from collection.
+
+## Winning Plan
+In case of multiple indexes for same query.
+
+![alt text](./images/image-102.png)
+
+### Which index It used?
+In case of multiple indexes:
+
+MongoDB checks the performance of index on a sample of documents once the queries is run and set it as Winning Plan.
+
+Then for second query of similar type it doesn't race them again.
+
+It store that winning plan in cache.
+
+Cache is reset after:
+1. After 1000 writes.
+2. Index is reset.
+3. Mongo server is restarted.
+4. Other indexes are manipulated.
+
+![alt text](./images/image-103.png)
+
+![alt text](./images/image-104.png)
+
+## Multi Key Index
+A multi-key index is an index that can be created on an array field.
+
+![alt text](./images/image-105.png)
+
+MongoDB will create a seperate index entry for each value in each array. So it can quickly look up documents that match a specific value.
+
+![alt text](./images/image-106.png)
+
+## Text Index
+
+![alt text](./images/image-107.png)
+
+### Search by `youtube` text:
+![alt text](./images/image-108.png)
+
+```
+db.students.createIndex({ name: "text", bio: "text" })
+```
+![alt text](./images/image-109.png)
+
+```
+db.students.find({ $text: { $search: "youtube" } })
+```
+OR
+```
+db.students.find({ $text: { $search: "youtube actor" } })
+```
+![alt text](./images/image-110.png)
+
+![alt text](./images/image-111.png)
+
+### Set priority on field while creating index to search result:
+![alt text](./images/image-112.png)
+
+### Lock/Unlock collection while creating index: { background: true/false }
+![alt text](./images/image-113.png)
